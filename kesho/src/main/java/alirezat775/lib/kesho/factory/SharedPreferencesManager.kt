@@ -3,8 +3,6 @@ package alirezat775.lib.kesho.factory
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.core.content.edit
-
 
 class SharedPreferencesManager(private val context: Context) : IKesho {
 
@@ -21,55 +19,44 @@ class SharedPreferencesManager(private val context: Context) : IKesho {
         }
     }
 
-    override fun push(key: String, value: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun push(key: String, value: String?) {
+        getSharedPreferences(context).edit().putString(key, value).apply()
     }
 
     override fun push(key: String, value: Boolean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun push(key: String, value: Double) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        getSharedPreferences(context).edit().putBoolean(key, value).apply()
     }
 
     override fun push(key: String, value: Float) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        getSharedPreferences(context).edit().putFloat(key, value).apply()
     }
 
     override fun push(key: String, value: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        getSharedPreferences(context).edit().putInt(key, value).apply()
     }
 
     override fun push(key: String, value: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        getSharedPreferences(context).edit().putLong(key, value).apply()
     }
 
-    override fun pull(key: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun pull(key: String, defaultValue: String): String? {
+        return getSharedPreferences(context).getString(key, defaultValue)
     }
 
-    override fun pull(key: String, defaultValue: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun pull(key: String, defaultValue: Boolean): Boolean {
+        return getSharedPreferences(context).getBoolean(key, defaultValue)
     }
 
-    override fun pull(key: String, defaultValue: Boolean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun pull(key: String, defaultValue: Float): Float {
+        return getSharedPreferences(context).getFloat(key, defaultValue)
     }
 
-    override fun pull(key: String, defaultValue: Double) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun pull(key: String, defaultValue: Int): Int {
+        return getSharedPreferences(context).getInt(key, defaultValue)
     }
 
-    override fun pull(key: String, defaultValue: Float) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun pull(key: String, defaultValue: Long): Long {
+        return getSharedPreferences(context).getLong(key, defaultValue)
     }
 
-    override fun pull(key: String, defaultValue: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun pull(key: String, defaultValue: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }
