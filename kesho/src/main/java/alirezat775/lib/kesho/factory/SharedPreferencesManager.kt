@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 
-class SharedPreferencesManager(private val context: Context) : IKesho {
+internal class SharedPreferencesManager(private val context: Context) : IKesho {
 
     private companion object {
         private val preferences: String? = null
@@ -58,5 +58,4 @@ class SharedPreferencesManager(private val context: Context) : IKesho {
     override fun pull(key: String, defaultValue: Long): Long {
         return getSharedPreferences(context).getLong(key, defaultValue)
     }
-
 }

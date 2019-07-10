@@ -1,6 +1,6 @@
 package alirezat775.lib.kesho.factory
 
-interface IKesho {
+internal interface IKesho {
 
     fun push(key: String, value: String?)
     fun push(key: String, value: Boolean)
