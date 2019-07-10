@@ -27,10 +27,10 @@ class MainActivity : AppCompatActivity() {
         kesho.push(KEY_LONG, 1L)
         kesho.push(KEY_BOOLEAN, true)
 
-        Log.d(TAG, "value" + kesho.pull(KEY_INT, 0))
-        Log.d(TAG, "value" + kesho.pull(KEY_STRING, ""))
-        Log.d(TAG, "value" + kesho.pull(KEY_FLOAT, 0.0f))
-        Log.d(TAG, "value" + kesho.pull(KEY_LONG, 0L))
-        Log.d(TAG, "value" + kesho.pull(KEY_BOOLEAN, false))
+        Log.d(TAG, "value : " + kesho.pull(KEY_INT, 0))
+        Log.d(TAG, "value : " + kesho.pull(KEY_STRING, ""))
+        Log.d(TAG, "value : " + kesho.pull(KEY_FLOAT, 0.0f))
+        Log.d(TAG, "value : " + kesho.pull(KEY_LONG, 0L))
+        Log.d(TAG, "value : " + kesho.pull(KEY_BOOLEAN, false))
     }
 }
