@@ -63,4 +63,7 @@ internal class SharedPreferencesManager(private val context: Context) : IKesho {
         getSharedPreferences(context).edit().remove(key).apply()
     }
 
+    override fun clear() {
+        getSharedPreferences(context).edit().clear().apply()
+    }
 }

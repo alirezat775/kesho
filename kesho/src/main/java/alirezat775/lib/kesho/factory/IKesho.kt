@@ -15,4 +15,5 @@ internal interface IKesho {
     fun pull(key: String, defaultValue: Long): Long
 
     fun remove(key: String)
+    fun clear()
 }

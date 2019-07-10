@@ -6,7 +6,6 @@ import android.content.Context
 
 class Kesho(private val context: Context, @KeshoType type: String) : IKesho {
 
-
     companion object {
         const val SHARED_PREFRENCES_MANAGER: String = "SharedPreferencesManager"
     }
@@ -61,5 +60,9 @@ class Kesho(private val context: Context, @KeshoType type: String) : IKesho {
 
     override fun remove(key: String) {
         kesho.remove(key)
+    }
+
+    override fun clear() {
+        kesho.clear()
     }
 }
