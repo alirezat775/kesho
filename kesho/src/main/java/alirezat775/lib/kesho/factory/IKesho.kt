@@ -13,4 +13,6 @@ internal interface IKesho {
     fun pull(key: String, defaultValue: Float): Float
     fun pull(key: String, defaultValue: Int): Int
     fun pull(key: String, defaultValue: Long): Long
+
+    fun remove(key: String)
 }
