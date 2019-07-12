@@ -57,4 +57,12 @@ class Kesho(private val context: Context, @KeshoType type: String) : IKesho {
     override fun pull(key: String, defaultValue: Long): Long {
         return kesho.pull(key, defaultValue)
     }
+
+    override fun remove(key: String) {
+        kesho.remove(key)
+    }
+
+    override fun clear() {
+        kesho.clear()
+    }
 }
