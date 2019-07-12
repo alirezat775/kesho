@@ -1,0 +1,7 @@
+Kesho 1.0.0 Released!
+
+Options
+- push boolean, string, float, int, long
+- pull boolean, string, float, int, long
+- remove specific key
+- clear all cache
