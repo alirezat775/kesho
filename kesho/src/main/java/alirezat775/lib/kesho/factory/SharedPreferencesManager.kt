@@ -1,9 +1,17 @@
 package alirezat775.lib.kesho.factory
 
 import alirezat775.lib.kesho.Kesho
+import alirezat775.lib.kesho.helper.JsonHelper
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import kotlin.jvm.internal.ClassReference
+
+/**
+ * Author:  Alireza Tizfahm Fard
+ * Date:    2019-07-14
+ * Email:   alirezat775@gmail.com
+ */
 
 internal class SharedPreferencesManager(private val context: Context) : IKesho {
 
@@ -45,6 +53,12 @@ internal class SharedPreferencesManager(private val context: Context) : IKesho {
     override fun push(key: String, value: Long, timeToLife: Long) {
         addTimeToLife(key, timeToLife)
         getSharedPreferences(context).edit().putLong(key, value).apply()
+    }
+
+    override fun push(key: String, value: Any?, timeToLife: Long) {
+        addTimeToLife(key, timeToLife)
+        val json = JsonHelper.toJson(value!!)
+        getSharedPreferences(context).edit().putString(key, json).apply()
     }
 
     override fun pull(key: String, defaultValue: String): String? {
@@ -92,6 +106,16 @@ internal class SharedPreferencesManager(private val context: Context) : IKesho {
         return getSharedPreferences(context).getLong(key, defaultValue)
     }
 
+    override fun pull(key: String, defaultValue: String, type: Any): Any? {
+        if (!valid(key)) {
+            remove(key + postFixTimeToLife)
+            remove(key)
+            return defaultValue
+        }
+        val json = getSharedPreferences(context).getString(key, defaultValue)
+        return JsonHelper.fromJson(json!!, (type as ClassReference).jClass)
+    }
+
     override fun remove(key: String) {
         getSharedPreferences(context).edit().remove(key).apply()
     }
@@ -104,22 +128,24 @@ internal class SharedPreferencesManager(private val context: Context) : IKesho {
         return getSharedPreferences(context).contains(key)
     }
 
-    private fun addTimeToLife(key: String, timeToLife: Long) {
-        if (timeToLife != Kesho.NONE_EXPIRE_TIME) {
-            getSharedPreferences(context).edit()
-                .putLong(key + postFixTimeToLife, System.currentTimeMillis() + timeToLife)
-                .apply()
-        }
-    }
-
     override fun valid(key: String): Boolean {
         if (!has(key)) return false
 
-        val timeToLife = getSharedPreferences(context).getLong(key + postFixTimeToLife, Kesho.EXPIRE_TIME)
-        return if (timeToLife == Kesho.EXPIRE_TIME) {
-            false
-        } else {
-            System.currentTimeMillis() < timeToLife
+        return when (val timeToLife = getSharedPreferences(context).getLong(key + postFixTimeToLife, Kesho.EXPIRE_TIME)) {
+            Kesho.EXPIRE_TIME -> false
+            Kesho.NONE_EXPIRE_TIME -> true
+            else -> System.currentTimeMillis() < timeToLife
         }
+    }
+
+    private fun addTimeToLife(key: String, timeToLife: Long) {
+        val time = if (timeToLife == Kesho.NONE_EXPIRE_TIME)
+            timeToLife
+        else
+            System.currentTimeMillis() + timeToLife
+
+        getSharedPreferences(context).edit()
+            .putLong(key + postFixTimeToLife, time)
+            .apply()
     }
 }

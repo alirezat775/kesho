@@ -2,6 +2,12 @@ package alirezat775.lib.kesho
 
 import androidx.annotation.LongDef
 
+/**
+ * Author:  Alireza Tizfahm Fard
+ * Date:    2019-07-14
+ * Email:   alirezat775@gmail.com
+ */
+
 @LongDef(
     Kesho.ONE_SECOND,
     Kesho.ONE_MINUTES,
