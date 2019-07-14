@@ -30,23 +30,23 @@ class Kesho(private val context: Context, @KeshoType type: String) : IKesho {
         }
     }
 
-    override fun push(key: String, value: String?,@TimeType timeToLife: Long) {
+    override fun push(key: String, value: String?, @TimeType timeToLife: Long) {
         kesho.push(key, value, timeToLife)
     }
 
-    override fun push(key: String, value: Boolean,@TimeType timeToLife: Long) {
+    override fun push(key: String, value: Boolean, @TimeType timeToLife: Long) {
         kesho.push(key, value, timeToLife)
     }
 
-    override fun push(key: String, value: Float,@TimeType timeToLife: Long) {
+    override fun push(key: String, value: Float, @TimeType timeToLife: Long) {
         kesho.push(key, value, timeToLife)
     }
 
-    override fun push(key: String, value: Int,@TimeType timeToLife: Long) {
+    override fun push(key: String, value: Int, @TimeType timeToLife: Long) {
         kesho.push(key, value, timeToLife)
     }
 
-    override fun push(key: String, value: Long,@TimeType timeToLife: Long) {
+    override fun push(key: String, value: Long, @TimeType timeToLife: Long) {
         kesho.push(key, value, timeToLife)
     }
 
@@ -78,7 +78,11 @@ class Kesho(private val context: Context, @KeshoType type: String) : IKesho {
         kesho.clear()
     }
 
-    override fun isExist(key: String): Boolean {
-        return kesho.isExist(key)
+    override fun has(key: String): Boolean {
+        return kesho.has(key)
+    }
+
+    override fun valid(key: String): Boolean {
+        return kesho.valid(key)
     }
 }

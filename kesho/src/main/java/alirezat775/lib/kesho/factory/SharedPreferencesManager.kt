@@ -100,7 +100,7 @@ internal class SharedPreferencesManager(private val context: Context) : IKesho {
         getSharedPreferences(context).edit().clear().apply()
     }
 
-    override fun isExist(key: String): Boolean {
+    override fun has(key: String): Boolean {
         return getSharedPreferences(context).contains(key)
     }
 
@@ -112,8 +112,8 @@ internal class SharedPreferencesManager(private val context: Context) : IKesho {
         }
     }
 
-    private fun valid(key: String): Boolean {
-        if (!isExist(key)) return false
+    override fun valid(key: String): Boolean {
+        if (!has(key)) return false
 
         val timeToLife = getSharedPreferences(context).getLong(key + postFixTimeToLife, Kesho.EXPIRE_TIME)
         return if (timeToLife == Kesho.EXPIRE_TIME) {

@@ -36,8 +36,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "value : " + kesho.pull(KEY_FLOAT, 0.0f))
         Log.d(TAG, "value : " + kesho.pull(KEY_LONG, 0L))
         Log.d(TAG, "value : " + kesho.pull(KEY_BOOLEAN, false))
-        Log.d(TAG, "value : " + kesho.isExist(KEY_IS_EXIST))
-
+        Log.d(TAG, "value : " + kesho.has(KEY_IS_EXIST))
 
         kesho.push(KEY_STRING_WITH_TTL, "hello world", Kesho.ONE_SECOND * 10)
         Log.d(TAG, "value : " + kesho.pull(KEY_STRING_WITH_TTL, "default"))
@@ -45,6 +44,5 @@ class MainActivity : AppCompatActivity() {
         Handler().postDelayed({
             Log.d(TAG, "value : " + kesho.pull(KEY_STRING_WITH_TTL, "default"))
         }, Kesho.ONE_SECOND * 12)
-
     }
 }
