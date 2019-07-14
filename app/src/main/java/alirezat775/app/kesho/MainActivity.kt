@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     private val KEY_FLOAT = "KEY_FLOAT"
     private val KEY_LONG = "KEY_LONG"
     private val KEY_BOOLEAN = "KEY_BOOLEAN"
+    private val KEY_IS_EXIST = "KEY_IS_EXIST"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,5 +33,6 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "value : " + kesho.pull(KEY_FLOAT, 0.0f))
         Log.d(TAG, "value : " + kesho.pull(KEY_LONG, 0L))
         Log.d(TAG, "value : " + kesho.pull(KEY_BOOLEAN, false))
+        Log.d(TAG, "value : " + kesho.isExist(KEY_IS_EXIST))
     }
 }

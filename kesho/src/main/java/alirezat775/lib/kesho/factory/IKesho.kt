@@ -16,4 +16,6 @@ internal interface IKesho {
 
     fun remove(key: String)
     fun clear()
+
+    fun isExist(key: String): Boolean
 }

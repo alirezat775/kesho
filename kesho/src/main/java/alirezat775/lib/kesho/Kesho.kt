@@ -65,4 +65,8 @@ class Kesho(private val context: Context, @KeshoType type: String) : IKesho {
     override fun clear() {
         kesho.clear()
     }
+
+    override fun isExist(key: String): Boolean {
+        return kesho.isExist(key)
+    }
 }

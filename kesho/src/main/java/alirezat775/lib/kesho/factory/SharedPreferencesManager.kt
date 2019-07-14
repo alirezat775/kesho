@@ -66,4 +66,8 @@ internal class SharedPreferencesManager(private val context: Context) : IKesho {
     override fun clear() {
         getSharedPreferences(context).edit().clear().apply()
     }
+
+    override fun isExist(key: String): Boolean {
+        return getSharedPreferences(context).contains(key)
+    }
 }
