@@ -1,12 +1,14 @@
 package alirezat775.lib.kesho.factory
 
+import alirezat775.lib.kesho.TimeType
+
 internal interface IKesho {
 
-    fun push(key: String, value: String?)
-    fun push(key: String, value: Boolean)
-    fun push(key: String, value: Float)
-    fun push(key: String, value: Int)
-    fun push(key: String, value: Long)
+    fun push(key: String, value: String?, @TimeType timeToLife: Long = 0)
+    fun push(key: String, value: Boolean, @TimeType timeToLife: Long = 0)
+    fun push(key: String, value: Float, @TimeType timeToLife: Long = 0)
+    fun push(key: String, value: Int, @TimeType timeToLife: Long = 0)
+    fun push(key: String, value: Long, @TimeType timeToLife: Long = 0)
 
     fun pull(key: String, defaultValue: String): String?
     fun pull(key: String, defaultValue: Boolean): Boolean

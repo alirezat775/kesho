@@ -2,6 +2,7 @@ package alirezat775.app.kesho
 
 import alirezat775.lib.kesho.Kesho
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 
@@ -16,11 +17,13 @@ class MainActivity : AppCompatActivity() {
     private val KEY_BOOLEAN = "KEY_BOOLEAN"
     private val KEY_IS_EXIST = "KEY_IS_EXIST"
 
+    private val KEY_STRING_WITH_TTL = "KEY_STRING_WITH_TTL"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val kesho = Kesho(this, Kesho.SHARED_PREFRENCES_MANAGER)
+        val kesho = Kesho(this, Kesho.SHARED_PREFERENCES_MANAGER)
 
         kesho.push(KEY_INT, 1)
         kesho.push(KEY_STRING, "hello world")
@@ -34,5 +37,14 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "value : " + kesho.pull(KEY_LONG, 0L))
         Log.d(TAG, "value : " + kesho.pull(KEY_BOOLEAN, false))
         Log.d(TAG, "value : " + kesho.isExist(KEY_IS_EXIST))
+
+
+        kesho.push(KEY_STRING_WITH_TTL, "hello world", Kesho.ONE_SECOND * 10)
+        Log.d(TAG, "value : " + kesho.pull(KEY_STRING_WITH_TTL, "default"))
+
+        Handler().postDelayed({
+            Log.d(TAG, "value : " + kesho.pull(KEY_STRING_WITH_TTL, "default"))
+        }, Kesho.ONE_SECOND * 12)
+
     }
 }
