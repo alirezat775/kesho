@@ -4,10 +4,13 @@
 Useful library for push and pull from kesho
 
 Options
-- push boolean, string, float, int, long 
-- pull boolean, string, float, int, long 
-- remove specific key
+- push boolean, string, float, int, long, anyObject 
+- pull boolean, string, float, int, long, anyObject
+- cache with timeToLife
 - clear all cache
+- remove specific key
+- check has specific key
+- check valid specific key
 
 ### Issue
 - [bug report](.github/ISSUE_TEMPLATE/bug_report.md)

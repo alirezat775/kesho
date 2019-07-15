@@ -5,3 +5,11 @@ Options
 - pull boolean, string, float, int, long
 - remove specific key
 - clear all cache
+
+Kesho 1.1.0 Released!
+
+- push anyObject
+- pull anyObject
+- check has specific key
+- check valid specific key
+- cache with timeToLife
