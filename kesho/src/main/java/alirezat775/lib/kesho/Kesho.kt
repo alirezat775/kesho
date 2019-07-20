@@ -12,6 +12,11 @@ import android.content.Context
 
 class Kesho(private val context: Context, @KeshoType type: String) : IKesho {
 
+    enum class Encrypt {
+        NONE_ENCRYPT,
+        DESede_ENCRYPT
+    }
+
     companion object {
 
         internal const val NONE_EXPIRE_TIME = 0L
@@ -36,7 +41,12 @@ class Kesho(private val context: Context, @KeshoType type: String) : IKesho {
         }
     }
 
-    override fun push(key: String, value: String?, @TimeType timeToLife: Long) {
+    override fun push(
+        key: String,
+        value: String?, @TimeType timeToLife: Long,
+        encryptType: Encrypt,
+        encryptKey: String
+    ) {
         kesho.push(key, value, timeToLife)
     }
 
@@ -60,8 +70,12 @@ class Kesho(private val context: Context, @KeshoType type: String) : IKesho {
         kesho.push(key, value, timeToLife)
     }
 
-    override fun pull(key: String, defaultValue: String): String? {
-        return kesho.pull(key, defaultValue)
+    override fun pull(
+        key: String, defaultValue: String,
+        encryptType: Encrypt,
+        encryptKey: String
+    ): String? {
+        return kesho.pull(key, defaultValue, encryptType, encryptKey)
     }
 
     override fun pull(key: String, defaultValue: Boolean): Boolean {

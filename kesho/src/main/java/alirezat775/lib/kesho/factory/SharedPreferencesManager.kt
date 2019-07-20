@@ -30,7 +30,11 @@ internal class SharedPreferencesManager(private val context: Context) : IKesho {
         }
     }
 
-    override fun push(key: String, value: String?, timeToLife: Long) {
+    override fun push(
+        key: String, value: String?, timeToLife: Long,
+        encryptType: Kesho.Encrypt,
+        encryptKey: String
+    ) {
         addTimeToLife(key, timeToLife)
         getSharedPreferences(context).edit().putString(key, value).apply()
     }
@@ -61,7 +65,11 @@ internal class SharedPreferencesManager(private val context: Context) : IKesho {
         getSharedPreferences(context).edit().putString(key, json).apply()
     }
 
-    override fun pull(key: String, defaultValue: String): String? {
+    override fun pull(
+        key: String, defaultValue: String,
+        encryptType: Kesho.Encrypt,
+        encryptKey: String
+    ): String? {
         if (!valid(key)) {
             remove(key + postFixTimeToLife)
             remove(key)
@@ -131,7 +139,8 @@ internal class SharedPreferencesManager(private val context: Context) : IKesho {
     override fun valid(key: String): Boolean {
         if (!has(key)) return false
 
-        return when (val timeToLife = getSharedPreferences(context).getLong(key + postFixTimeToLife, Kesho.EXPIRE_TIME)) {
+        return when (val timeToLife =
+            getSharedPreferences(context).getLong(key + postFixTimeToLife, Kesho.EXPIRE_TIME)) {
             Kesho.EXPIRE_TIME -> false
             Kesho.NONE_EXPIRE_TIME -> true
             else -> System.currentTimeMillis() < timeToLife
