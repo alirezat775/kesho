@@ -30,11 +30,7 @@ internal class SharedPreferencesManager(private val context: Context) : IKesho {
         }
     }
 
-    override fun push(
-        key: String, value: String?, timeToLife: Long,
-        encryptType: Kesho.Encrypt,
-        encryptKey: String
-    ) {
+    override fun push(key: String, value: String?, timeToLife: Long) {
         addTimeToLife(key, timeToLife)
         getSharedPreferences(context).edit().putString(key, value).apply()
     }
@@ -65,11 +61,7 @@ internal class SharedPreferencesManager(private val context: Context) : IKesho {
         getSharedPreferences(context).edit().putString(key, json).apply()
     }
 
-    override fun pull(
-        key: String, defaultValue: String,
-        encryptType: Kesho.Encrypt,
-        encryptKey: String
-    ): String? {
+    override fun pull(key: String, defaultValue: String): String? {
         if (!valid(key)) {
             remove(key + postFixTimeToLife)
             remove(key)

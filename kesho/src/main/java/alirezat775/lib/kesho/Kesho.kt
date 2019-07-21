@@ -2,7 +2,9 @@ package alirezat775.lib.kesho
 
 import alirezat775.lib.kesho.factory.IKesho
 import alirezat775.lib.kesho.factory.SharedPreferencesManager
+import alirezat775.lib.kesho.helper.CryptHelper
 import android.content.Context
+import java.security.KeyException
 
 /**
  * Author:  Alireza Tizfahm Fard
@@ -10,19 +12,23 @@ import android.content.Context
  * Email:   alirezat775@gmail.com
  */
 
-class Kesho(private val context: Context, @KeshoType type: String) : IKesho {
+class Kesho(
+    private val context: Context, @KeshoType type: String,
+    private val encryptType: Encrypt = Encrypt.NONE_ENCRYPT,
+    private val encryptKey: String = "SECRET_KEY_MUST_BE_24_CH"
+) : IKesho {
 
     enum class Encrypt {
         NONE_ENCRYPT,
-        DESede_ENCRYPT
+        DESEDE_ENCRYPT
     }
 
     companion object {
 
+        const val SHARED_PREFERENCES_MANAGER: String = "SharedPreferencesManager"
+
         internal const val NONE_EXPIRE_TIME = 0L
         internal const val EXPIRE_TIME = -1L
-
-        const val SHARED_PREFERENCES_MANAGER: String = "SharedPreferencesManager"
 
         const val ONE_SECOND = 1000L
         const val ONE_MINUTES = 60 * ONE_SECOND
@@ -39,15 +45,22 @@ class Kesho(private val context: Context, @KeshoType type: String) : IKesho {
         when (type) {
             SHARED_PREFERENCES_MANAGER -> kesho = SharedPreferencesManager(context)
         }
+        if (encryptType == Encrypt.DESEDE_ENCRYPT) {
+            if (encryptKey == "SECRET_KEY_MUST_BE_24_CH" || encryptKey.length < 23) {
+                throw KeyException("please set valid key with 24 character")
+            }
+            CryptHelper.setKey(encryptKey)
+        }
     }
 
-    override fun push(
-        key: String,
-        value: String?, @TimeType timeToLife: Long,
-        encryptType: Encrypt,
-        encryptKey: String
-    ) {
-        kesho.push(key, value, timeToLife)
+    override fun push(key: String, value: String?, @TimeType timeToLife: Long) {
+        var mValue = value
+        if (encryptType == Encrypt.DESEDE_ENCRYPT) {
+            if (value == null)
+                throw NullPointerException("value not be null when using encryption method")
+            mValue = CryptHelper.encrypt(value)
+        }
+        kesho.push(key, mValue, timeToLife)
     }
 
     override fun push(key: String, value: Boolean, @TimeType timeToLife: Long) {
@@ -66,16 +79,16 @@ class Kesho(private val context: Context, @KeshoType type: String) : IKesho {
         kesho.push(key, value, timeToLife)
     }
 
-    override fun push(key: String, value: Any?, timeToLife: Long) {
+    override fun push(key: String, value: Any?, @TimeType timeToLife: Long) {
         kesho.push(key, value, timeToLife)
     }
 
-    override fun pull(
-        key: String, defaultValue: String,
-        encryptType: Encrypt,
-        encryptKey: String
-    ): String? {
-        return kesho.pull(key, defaultValue, encryptType, encryptKey)
+    override fun pull(key: String, defaultValue: String): String? {
+        val value: String? = kesho.pull(key, defaultValue)
+        if (encryptType == Encrypt.DESEDE_ENCRYPT) {
+            return CryptHelper.decrypt(value!!)
+        }
+        return value
     }
 
     override fun pull(key: String, defaultValue: Boolean): Boolean {

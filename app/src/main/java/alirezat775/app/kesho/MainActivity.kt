@@ -18,12 +18,13 @@ class MainActivity : AppCompatActivity() {
     private val KEY_IS_EXIST = "KEY_IS_EXIST"
     private val KEY_OBJECT = "KEY_OBJECT"
     private val KEY_STRING_WITH_TTL = "KEY_STRING_WITH_TTL"
+    private val KEY_STRING_WITH_ENCRYPT = "KEY_STRING_WITH_ENCRYPT"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val kesho = Kesho(this, Kesho.SHARED_PREFERENCES_MANAGER)
+        val kesho = Kesho(this, Kesho.SHARED_PREFERENCES_MANAGER, Kesho.Encrypt.DESEDE_ENCRYPT,"_hello_world_secret_key_")
 
         kesho.push(KEY_INT, 1)
         kesho.push(KEY_STRING, "hello world")
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         kesho.push(KEY_BOOLEAN, true)
         kesho.push(KEY_OBJECT, SampleModel(1, "hello"))
 
+        kesho.push(KEY_STRING_WITH_ENCRYPT, "hello encrypt")
+
         Log.d(TAG, "value : " + kesho.pull(KEY_INT, 0))
         Log.d(TAG, "value : " + kesho.pull(KEY_STRING, ""))
         Log.d(TAG, "value : " + kesho.pull(KEY_FLOAT, 0.0f))
@@ -39,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "value : " + kesho.pull(KEY_BOOLEAN, false))
         Log.d(TAG, "value : " + kesho.pull(KEY_OBJECT, SampleModel::class.java.name, SampleModel::class))
         Log.d(TAG, "value : " + kesho.has(KEY_IS_EXIST))
+
+        kesho.pull(KEY_STRING_WITH_ENCRYPT, "hello encrypt")
 
         kesho.push(KEY_STRING_WITH_TTL, "hello world", Kesho.ONE_SECOND * 10)
         Log.d(TAG, "value : " + kesho.pull(KEY_STRING_WITH_TTL, "default"))

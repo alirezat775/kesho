@@ -103,5 +103,4 @@ object CryptHelper {
         }
         return decryptedText
     }
-
 }
