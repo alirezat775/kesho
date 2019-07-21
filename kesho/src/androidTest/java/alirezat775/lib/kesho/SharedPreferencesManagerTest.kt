@@ -16,7 +16,12 @@ class SharedPreferencesManagerTest {
     @Before
     fun setUp() {
         instrumentationContext = InstrumentationRegistry.getInstrumentation().context
-        kesho = Kesho(instrumentationContext, Kesho.SHARED_PREFRENCES_MANAGER)
+        kesho = Kesho(
+            instrumentationContext,
+            Kesho.SHARED_PREFERENCES_MANAGER,
+            Kesho.Encrypt.DESEDE_ENCRYPT,
+            "_hello_world_secret_key_v"
+        )
     }
 
     @Test
