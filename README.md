@@ -11,6 +11,7 @@ Options
 - remove specific key
 - check has specific key
 - check valid specific key
+- encrypt data with secret key
 
 ### Issue
 - [bug report](.github/ISSUE_TEMPLATE/bug_report.md)

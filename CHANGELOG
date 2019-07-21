@@ -13,3 +13,7 @@ Kesho 1.1.0 Released!
 - check has specific key
 - check valid specific key
 - cache with timeToLife
+
+Kesho 1.2.0 Released!
+
+- encrypt data with secret key
