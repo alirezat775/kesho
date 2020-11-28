@@ -1,6 +1,7 @@
 package alirezat775.app.kesho
 
 import alirezat775.lib.kesho.Kesho
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -24,7 +25,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val kesho = Kesho(this, Kesho.SHARED_PREFERENCES_MANAGER, Kesho.Encrypt.DESEDE_ENCRYPT,"_hello_world_secret_key_")
+        val kesho = Kesho(
+            this,
+            Kesho.SHARED_PREFERENCES_MANAGER,
+            Kesho.Encrypt.DESEDE_ENCRYPT,
+            "_hello_world_secret_key_"
+        )
 
         kesho.push(KEY_INT, 1)
         kesho.push(KEY_STRING, "hello world")
@@ -40,7 +46,10 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "value : " + kesho.pull(KEY_FLOAT, 0.0f))
         Log.d(TAG, "value : " + kesho.pull(KEY_LONG, 0L))
         Log.d(TAG, "value : " + kesho.pull(KEY_BOOLEAN, false))
-        Log.d(TAG, "value : " + kesho.pull(KEY_OBJECT, SampleModel::class.java.name, SampleModel::class))
+        Log.d(
+            TAG,
+            "value : " + kesho.pull(KEY_OBJECT, SampleModel::class.java.name, SampleModel::class)
+        )
         Log.d(TAG, "value : " + kesho.has(KEY_IS_EXIST))
 
         kesho.pull(KEY_STRING_WITH_ENCRYPT, "hello encrypt")
@@ -51,5 +60,9 @@ class MainActivity : AppCompatActivity() {
         Handler().postDelayed({
             Log.d(TAG, "value : " + kesho.pull(KEY_STRING_WITH_TTL, "default"))
         }, Kesho.ONE_SECOND * 12)
+
+        kesho.registerChangeListener(SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+            Log.d(TAG, "change key : $key")
+        })
     }
 }

@@ -4,6 +4,7 @@ import alirezat775.lib.kesho.factory.IKesho
 import alirezat775.lib.kesho.factory.SharedPreferencesManager
 import alirezat775.lib.kesho.helper.CryptHelper
 import android.content.Context
+import android.content.SharedPreferences
 import java.security.KeyException
 
 /**
@@ -117,6 +118,14 @@ class Kesho(
 
     override fun clear() {
         kesho.clear()
+    }
+
+    override fun registerChangeListener(changeListener: SharedPreferences.OnSharedPreferenceChangeListener) {
+        kesho.registerChangeListener(changeListener)
+    }
+
+    override fun unRegisterChangeListener(changeListener: SharedPreferences.OnSharedPreferenceChangeListener) {
+        kesho.unRegisterChangeListener(changeListener)
     }
 
     override fun has(key: String): Boolean {
