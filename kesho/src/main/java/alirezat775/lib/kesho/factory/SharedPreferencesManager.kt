@@ -25,7 +25,8 @@ internal class SharedPreferencesManager(private val context: Context) : IKesho {
 
         fun getSharedPreferences(context: Context): SharedPreferences {
             return sharedPreferences ?: synchronized(this) {
-                context.getSharedPreferences(preferences, Activity.MODE_PRIVATE).also { sharedPreferences = it }
+                context.getSharedPreferences(preferences, Activity.MODE_PRIVATE)
+                    .also { sharedPreferences = it }
             }
         }
     }
@@ -126,6 +127,14 @@ internal class SharedPreferencesManager(private val context: Context) : IKesho {
 
     override fun has(key: String): Boolean {
         return getSharedPreferences(context).contains(key)
+    }
+
+    override fun registerChangeListener(changeListener: SharedPreferences.OnSharedPreferenceChangeListener) {
+        getSharedPreferences(context).registerOnSharedPreferenceChangeListener(changeListener)
+    }
+
+    override fun unRegisterChangeListener(changeListener: SharedPreferences.OnSharedPreferenceChangeListener) {
+        getSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(changeListener)
     }
 
     override fun valid(key: String): Boolean {

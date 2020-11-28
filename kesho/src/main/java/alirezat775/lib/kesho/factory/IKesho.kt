@@ -2,6 +2,7 @@ package alirezat775.lib.kesho.factory
 
 import alirezat775.lib.kesho.Kesho
 import alirezat775.lib.kesho.TimeType
+import android.content.SharedPreferences
 
 /**
  * Author:  Alireza Tizfahm Fard
@@ -27,6 +28,9 @@ internal interface IKesho {
 
     fun remove(key: String)
     fun clear()
+
+    fun registerChangeListener(changeListener: SharedPreferences.OnSharedPreferenceChangeListener)
+    fun unRegisterChangeListener(changeListener: SharedPreferences.OnSharedPreferenceChangeListener)
 
     fun has(key: String): Boolean
     fun valid(key: String): Boolean
